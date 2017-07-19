@@ -1,18 +1,17 @@
-package com.example.szymon.chesstimer.view;
+package com.example.szymon.chesstimer.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.szymon.chesstimer.R;
-import com.example.szymon.chesstimer.TimerValues;
+import com.example.szymon.chesstimer.model.TimerValues;
+import com.example.szymon.chesstimer.settings.SettingsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +21,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     public static final String TIMER_KEY = "timer_key";
     private static final int SETTINGS_REQUEST_CODE = 123;
+
+    private MainPresenter  mainPresenter;
+    private TimerValues timerValues;
 
     @BindView(R.id.top_button)
     Button playerTop;
@@ -33,13 +35,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @BindView(R.id.settings)
     ImageView settings;
 
-    TimerValues timerValues;
     public static Intent getIntent(final Context context, final TimerValues timerValues) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(TIMER_KEY, timerValues);
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtras(bundle);
-
         return intent;
     }
 
@@ -49,22 +49,29 @@ public class MainActivity extends AppCompatActivity implements MainView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setLayoutToFullscreen();
+        mainPresenter = new MainPresenterImpl();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mainPresenter.onStart(this);
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mainPresenter.onStop();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         setLayoutToFullscreen();
-
-        //toast("before");
         if (requestCode == SETTINGS_REQUEST_CODE && resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
             timerValues = (TimerValues) bundle.getParcelable(TIMER_KEY);
             updateValuesOnButtons();
-        } else {
-            toast("else");
         }
     }
 
@@ -76,15 +83,18 @@ public class MainActivity extends AppCompatActivity implements MainView {
     private void toast(CharSequence text) {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
-
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
 
     @OnClick(R.id.settings)
     public void openSettingsActivity() {
-        startActivityForResult(SettingsActivity.getIntent(getBaseContext()), SETTINGS_REQUEST_CODE);
+        mainPresenter.openSettingsActivity();
+    }
 
+    @Override
+    public void openSettings() {
+        startActivityForResult(SettingsActivity.getIntent(getBaseContext()), SETTINGS_REQUEST_CODE);
     }
 
     private void setLayoutToFullscreen() {
@@ -109,5 +119,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     public void reset() {
     }
+
+
 
 }

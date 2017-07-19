@@ -1,4 +1,4 @@
-package com.example.szymon.chesstimer;
+package com.example.szymon.chesstimer.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

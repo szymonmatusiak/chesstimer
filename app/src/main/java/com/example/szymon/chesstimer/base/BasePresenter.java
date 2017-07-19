@@ -1,6 +1,4 @@
-package com.example.szymon.chesstimer.presenter;
-
-import com.example.szymon.chesstimer.view.IBaseView;
+package com.example.szymon.chesstimer.base;
 
 import java.lang.ref.WeakReference;
 
