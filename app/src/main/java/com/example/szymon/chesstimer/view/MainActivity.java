@@ -2,6 +2,7 @@ package com.example.szymon.chesstimer.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,12 +20,28 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
-    private static final String TIMER_KEY = "timer_key";
-    @BindView(R.id.top_button) Button playerTop;
-    @BindView(R.id.bottom_button) Button playerBottom;
+    public static final String TIMER_KEY = "timer_key";
+    private static final int SETTINGS_REQUEST_CODE = 123;
 
-    @BindView(R.id.pause) ImageView pause;
-    @BindView(R.id.settings) ImageView settings;
+    @BindView(R.id.top_button)
+    Button playerTop;
+    @BindView(R.id.bottom_button)
+    Button playerBottom;
+
+    @BindView(R.id.pause)
+    ImageView pause;
+    @BindView(R.id.settings)
+    ImageView settings;
+
+    TimerValues timerValues;
+    public static Intent getIntent(final Context context, final TimerValues timerValues) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(TIMER_KEY, timerValues);
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtras(bundle);
+
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,25 +53,40 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     }
 
-    public static Intent getIntent(final Context context, final TimerValues timerValues) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(TIMER_KEY, timerValues);
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtras(bundle);
-        String text = timerValues.toString();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        setLayoutToFullscreen();
+
+        //toast("before");
+        if (requestCode == SETTINGS_REQUEST_CODE && resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            timerValues = (TimerValues) bundle.getParcelable(TIMER_KEY);
+            updateValuesOnButtons();
+        } else {
+            toast("else");
+        }
+    }
+
+    private void updateValuesOnButtons() {
+        playerTop.setText(Integer.toString(timerValues.getTime1()) + ":00");
+        playerBottom.setText(Integer.toString(timerValues.getTime2()) + ":00");
+    }
+
+    private void toast(CharSequence text) {
+        Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
 
-        //Toast(text, duration);
-        return intent;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
-
-
 
     @OnClick(R.id.settings)
-    public void openSettingsActivity(){
-        startActivity(SettingsActivity.getIntent(getBaseContext()));
+    public void openSettingsActivity() {
+        startActivityForResult(SettingsActivity.getIntent(getBaseContext()), SETTINGS_REQUEST_CODE);
 
     }
+
     private void setLayoutToFullscreen() {
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -75,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void reset(){
+    public void reset() {
     }
 
 }

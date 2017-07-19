@@ -8,13 +8,53 @@ import android.os.Parcelable;
  */
 
 public class TimerValues implements Parcelable {
-    public TimerValues(int time1, int time2, int time3) {
+    private int time1,time2,time3;
+
+    @Override
+    public String toString() {
+        return "TimerValues{" +
+                "time1=" + time1 +
+                ", time2=" + time2 +
+                ", time3=" + time3 +
+                '}';
+    }
+
+    public void setTime1(int time1) {
+        this.time1 = time1;
+    }
+
+    public void setTime2(int time2) {
+        this.time2 = time2;
+    }
+
+    public void setTime3(int time3) {
+        this.time3 = time3;
+    }
+    public void setTimes(int time1, int time2, int time3) {
         this.time1 = time1;
         this.time2 = time2;
         this.time3 = time3;
     }
 
-    private int time1,time2,time3;
+    public int getTime1() {
+        return time1;
+    }
+
+    public int getTime2() {
+        return time2;
+    }
+
+    public int getTime3() {
+        return time3;
+    }
+
+    public TimerValues(int time1, int time2, int time3) {
+        this.time1 = time1;
+        this.time2 = time2;
+
+        this.time3 = time3;
+    }
+
 
     @Override
     public int describeContents() {
@@ -29,6 +69,9 @@ public class TimerValues implements Parcelable {
     }
 
     public TimerValues() {
+        time1 = 10;
+        time2 = 10;
+        time3 = 5;
     }
 
         protected TimerValues(Parcel in) {
@@ -49,12 +92,4 @@ public class TimerValues implements Parcelable {
         }
     };
 
-    @Override
-    public String toString() {
-        return "TimerValues{" +
-                "time1=" + time1 +
-                ", time2=" + time2 +
-                ", time3=" + time3 +
-                '}';
-    }
 }

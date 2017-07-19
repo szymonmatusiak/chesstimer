@@ -3,6 +3,6 @@
     <string name="start_match">Start match</string>
     <string name="time_player_one">Time for player number one</string>
     <string name="time_player_two">Time for player number two</string>
-    <string name="addon">Time added after move one</string>
+    <string name="addon">Time added after move</string>
 
 </resources>
