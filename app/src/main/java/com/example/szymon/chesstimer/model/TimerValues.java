@@ -8,51 +8,51 @@ import android.os.Parcelable;
  */
 
 public class TimerValues implements Parcelable {
-    private int time1,time2,time3;
+    private int firstPlayerTime, secondPlayerTime, addon;
 
     @Override
     public String toString() {
         return "TimerValues{" +
-                "time1=" + time1 +
-                ", time2=" + time2 +
-                ", time3=" + time3 +
+                "firstPlayerTime=" + firstPlayerTime +
+                ", secondPlayerTime=" + secondPlayerTime +
+                ", addon=" + addon +
                 '}';
     }
 
-    public void setTime1(int time1) {
-        this.time1 = time1;
+    public void setFirstPlayerTime(int firstPlayerTime) {
+        this.firstPlayerTime = firstPlayerTime;
     }
 
-    public void setTime2(int time2) {
-        this.time2 = time2;
+    public void setSecondPlayerTime(int secondPlayerTime) {
+        this.secondPlayerTime = secondPlayerTime;
     }
 
-    public void setTime3(int time3) {
-        this.time3 = time3;
+    public void setAddon(int addon) {
+        this.addon = addon;
     }
     public void setTimes(int time1, int time2, int time3) {
-        this.time1 = time1;
-        this.time2 = time2;
-        this.time3 = time3;
+        this.firstPlayerTime = time1;
+        this.secondPlayerTime = time2;
+        this.addon = time3;
     }
 
-    public int getTime1() {
-        return time1;
+    public int getFirstPlayerTime() {
+        return firstPlayerTime;
     }
 
-    public int getTime2() {
-        return time2;
+    public int getSecondPlayerTime() {
+        return secondPlayerTime;
     }
 
-    public int getTime3() {
-        return time3;
+    public int getAddon() {
+        return addon;
     }
 
-    public TimerValues(int time1, int time2, int time3) {
-        this.time1 = time1;
-        this.time2 = time2;
+    public TimerValues(int firstPlayerTime, int secondPlayerTime, int addon) {
+        this.firstPlayerTime = firstPlayerTime;
+        this.secondPlayerTime = secondPlayerTime;
 
-        this.time3 = time3;
+        this.addon = addon;
     }
 
 
@@ -63,21 +63,21 @@ public class TimerValues implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.time1);
-        dest.writeInt(this.time2);
-        dest.writeInt(this.time3);
+        dest.writeInt(this.firstPlayerTime);
+        dest.writeInt(this.secondPlayerTime);
+        dest.writeInt(this.addon);
     }
 
     public TimerValues() {
-        time1 = 10;
-        time2 = 10;
-        time3 = 5;
+        firstPlayerTime = 10;
+        secondPlayerTime = 10;
+        addon = 5;
     }
 
         protected TimerValues(Parcel in) {
-            this.time1 = in.readInt();
-            this.time2 = in.readInt();
-            this.time3 = in.readInt();
+            this.firstPlayerTime = in.readInt();
+            this.secondPlayerTime = in.readInt();
+            this.addon = in.readInt();
         }
 
     public static final Parcelable.Creator<TimerValues> CREATOR = new Parcelable.Creator<TimerValues>() {

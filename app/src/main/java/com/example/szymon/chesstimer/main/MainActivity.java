@@ -65,9 +65,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        setLayoutToFullscreen();
         if (requestCode == SETTINGS_REQUEST_CODE && resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
             timerValues = (TimerValues) bundle.getParcelable(TIMER_KEY);
@@ -76,15 +75,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     private void updateValuesOnButtons() {
-        playerTop.setText(Integer.toString(timerValues.getTime1()) + ":00");
-        playerBottom.setText(Integer.toString(timerValues.getTime2()) + ":00");
+        playerTop.setText(Integer.toString(timerValues.getFirstPlayerTime()) + ":00");
+        playerBottom.setText(Integer.toString(timerValues.getSecondPlayerTime()) + ":00");
     }
 
-    private void toast(CharSequence text) {
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+    private void toast(final String text) {
+        Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.settings)

@@ -14,7 +14,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
     }
 
     @Override
-    public void onStart(MainView mainView) {
+    public void onStart(final MainView mainView) {
         attachView(mainView);
     }
 

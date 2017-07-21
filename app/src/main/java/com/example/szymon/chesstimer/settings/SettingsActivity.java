@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.widget.Toast.LENGTH_SHORT;
 import static com.example.szymon.chesstimer.main.MainActivity.TIMER_KEY;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsView{
@@ -32,8 +33,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
     private SettingsPresenter settingsPresenter;
 
     public static Intent getIntent(final Context context) {
-        Intent intent = new Intent(context, SettingsActivity.class);
-        return intent;
+        return new Intent(context, SettingsActivity.class); 
     }
 
     @Override
@@ -56,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
         super.onStop();
         settingsPresenter.onStop();
     }
-    public void setTime() {
+    public void setTimer() {
         if (!TextUtils.isEmpty(timePlayerOne.getText()) && !TextUtils.isEmpty(timePlayerTwo.getText()) && !TextUtils.isEmpty(addon.getText())) {
             timer.setTimes(
                     Integer.valueOf(timePlayerOne.getText().toString()),
@@ -70,15 +70,12 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView{
         settingsPresenter.openMainActivity();
     }
 
-    private void toast(CharSequence text) {
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+    private void toast(String text) {
+        Toast.makeText(this, text, LENGTH_SHORT).show();
     }
 
     public void openMain() {
-        setTime();
+        setTimer();
         Intent intent = new Intent();
         intent.putExtra(TIMER_KEY, timer);
         setResult(RESULT_OK, intent);
