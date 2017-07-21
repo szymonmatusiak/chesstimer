@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <Button
         android:id="@+id/top_button"
@@ -11,7 +11,8 @@
         android:layout_height="200dp"
         android:layout_weight="1"
         android:rotation="180"
-        android:text="@string/start_match" />
+        android:text="@string/start_match"
+        android:textSize="40dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,10 +37,11 @@
 
     <Button
         android:id="@+id/bottom_button"
-        android:text="@string/start_match"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_gravity="bottom"
         android:layout_weight="1"
-        android:layout_gravity="bottom"/>
+        android:text="@string/start_match"
+        android:textSize="40dp" />
 
 </LinearLayout>
