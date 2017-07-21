@@ -13,7 +13,7 @@ public class SettingsPresenterImpl extends BasePresenter<SettingsView> implement
     }
 
     @Override
-    public void onStart(SettingsView settingsView) {
+    public void onStart(final SettingsView settingsView) {
         attachView(settingsView);
     }
 
