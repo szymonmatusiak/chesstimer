@@ -107,10 +107,23 @@ public class MainActivity extends AppCompatActivity implements MainView {
         switch (view.getId()) {
             case R.id.bottom_button:
                 mainPresenter.onTimerButtonClicked(Button.BOTTOM);
+                switchActiveButton(Button.BOTTOM);
                 break;
+
             case R.id.top_button:
                 mainPresenter.onTimerButtonClicked(Button.TOP);
+                switchActiveButton(Button.TOP);
                 break;
+        }
+    }
+
+    private void switchActiveButton(int button) {
+        if (button == Button.BOTTOM) {
+            playerBottom.setClickable(false);
+            playerTop.setClickable(true);
+        } else {
+            playerBottom.setClickable(true);
+            playerTop.setClickable(false);
         }
     }
 

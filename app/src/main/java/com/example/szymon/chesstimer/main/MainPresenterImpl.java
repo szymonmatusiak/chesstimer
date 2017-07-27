@@ -1,11 +1,13 @@
 package com.example.szymon.chesstimer.main;
 
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 
 import com.example.szymon.chesstimer.base.BasePresenter;
 import com.example.szymon.chesstimer.model.TimerValues;
+import com.example.szymon.chesstimer.settings.SettingsActivity;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -21,7 +23,11 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 
     private TimerValues timerValues;
     private CountDownTimer countDownTimer;
+    private Handler handler;
+    private Runnable runnable;
     private int moves = 0;
+    private int[] num = new int[2];
+    private int lastClickedButton;
 
     @Override
     public void openSettingsActivity() {
@@ -31,6 +37,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
     @Override
     public void onStart(final MainView mainView) {
         attachView(mainView);
+        handler = new Handler();
     }
 
     @Override
@@ -42,11 +49,42 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
     }
 
     @Override
-    public void onTimerButtonClicked(int button) {
+    public void onTimerButtonClicked(final int button) {
         moves++;
         if (countDownTimer != null) {
             countDownTimer.cancel();
+            handler.removeCallbacks(runnable);
         }
+        switch (timerValues.getDelay()) {
+            case SettingsActivity.Delay.SIMPLE_DELAY:
+                handler.postDelayed(runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        timerWithSimpleDelay(button);
+                    }
+                }, timerValues.getAddon());
+                break;
+
+            case SettingsActivity.Delay.FISCHER_DELAY:
+                timerWithFischerDelay(button);
+                break;
+
+            case SettingsActivity.Delay.BRONSTEIN_DELAY:
+                break;
+        }
+    }
+
+    private void timerWithSimpleDelay(final int button) {
+        if (button == TOP) {
+            getView().updateValuesOnButton(getTimeToShow(timerValues.getFirstPlayerTime()), button);
+            startTimer(timerValues.getFirstPlayerTime(), TOP);
+        } else {
+            getView().updateValuesOnButton(getTimeToShow(timerValues.getSecondPlayerTime()), button);
+            startTimer(timerValues.getSecondPlayerTime(), BOTTOM);
+        }
+    }
+
+    private void timerWithFischerDelay(int button) {
         if (button == TOP) {
             if (moves >= 3) {
                 timerValues.setFirstPlayerTime(timerValues.getFirstPlayerTime() + timerValues.getAddon());
@@ -112,7 +150,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         timerValues.setSecondPlayerTime(timerValues.getSecondPlayerTime() * 1000 * 60);
     }
 
-    @IntDef({Button.BOTTOM, TOP})
+    @IntDef({BOTTOM, TOP})
     @Retention(RetentionPolicy.SOURCE)
     @interface Button {
         int BOTTOM = 0;
