@@ -25,9 +25,9 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
     private CountDownTimer countDownTimer;
     private Handler handler;
     private Runnable runnable;
+    private int lastMoveFirstPlayer;
+    private int lastMoveSecondPlayer;
     private int moves = 0;
-    private int[] num = new int[2];
-    private int lastClickedButton;
 
     @Override
     public void openSettingsActivity() {
@@ -45,7 +45,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
-        if(handler != null)
+        if (handler != null)
             handler.removeCallbacks(runnable);
         detachView(false);
     }
@@ -72,7 +72,35 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
                 break;
 
             case SettingsActivity.Delay.BRONSTEIN_DELAY:
+                timerWithBronsteinDelay(button);
                 break;
+        }
+    }
+
+    private void timerWithBronsteinDelay(int button) {
+        if (button == TOP) {
+            if (moves >= 3) {
+                if (lastMoveFirstPlayer - timerValues.getFirstPlayerTime() > timerValues.getAddon()) {
+                    timerValues.setFirstPlayerTime(timerValues.getFirstPlayerTime() + timerValues.getAddon());
+                    getView().updateValuesOnButton(getTimeToShow(timerValues.getFirstPlayerTime()), button);
+                } else {
+                    timerValues.setFirstPlayerTime(lastMoveFirstPlayer);
+                }
+            }
+            lastMoveFirstPlayer = timerValues.getFirstPlayerTime();
+            startTimer(timerValues.getFirstPlayerTime(), TOP);
+        } else {
+            if (moves >= 3) {
+                if (lastMoveSecondPlayer - timerValues.getSecondPlayerTime() > timerValues.getAddon()) {
+                    timerValues.setSecondPlayerTime(timerValues.getSecondPlayerTime() + timerValues.getAddon());
+                    getView().updateValuesOnButton(getTimeToShow(timerValues.getSecondPlayerTime()), button);
+                } else {
+                    timerValues.setSecondPlayerTime(lastMoveSecondPlayer);
+
+                }
+            }
+            lastMoveSecondPlayer = timerValues.getSecondPlayerTime();
+            startTimer(timerValues.getSecondPlayerTime(), BOTTOM);
         }
     }
 
@@ -140,7 +168,8 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         this.timerValues = timerValues;
         convertTimeToMinutes(timerValues);
         convertAddonToSeconds(timerValues);
-
+        lastMoveFirstPlayer = timerValues.getFirstPlayerTime();
+        lastMoveSecondPlayer = timerValues.getSecondPlayerTime();
     }
 
     private void convertAddonToSeconds(final TimerValues timerValues) {
