@@ -22,6 +22,8 @@ import static com.example.szymon.chesstimer.main.MainPresenterImpl.Button;
 public class MainActivity extends AppCompatActivity implements MainView {
 
     public static final String TIMER_KEY = "timer_key";
+    public static final String DELAY = "delay";
+
     private static final int SETTINGS_REQUEST_CODE = 123;
 
     @BindView(R.id.top_button)

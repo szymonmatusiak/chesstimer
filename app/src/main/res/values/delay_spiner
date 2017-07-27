@@ -2,7 +2,7 @@
 <resources>
     <string-array name="delay_array">
         <item>@string/simple_delay</item>
-        <item>@string/fischer_delay</item>
         <item>@string/bronstein_delay</item>
+        <item>@string/fischer_delay</item>
     </string-array>
 </resources>
