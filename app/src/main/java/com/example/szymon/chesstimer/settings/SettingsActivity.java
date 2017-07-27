@@ -71,11 +71,14 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
     }
 
     public void setTimer() {
-        if (!TextUtils.isEmpty(timePlayerOne.getText()) && !TextUtils.isEmpty(timePlayerTwo.getText()) && !TextUtils.isEmpty(addon.getText())) {
-            timer.setTimes(
-                    Integer.valueOf(timePlayerOne.getText().toString()),
-                    Integer.valueOf(timePlayerTwo.getText().toString()),
-                    Integer.valueOf(addon.getText().toString()));
+        if (!TextUtils.isEmpty(timePlayerOne.getText())) {
+            timer.setFirstPlayerTime(Integer.valueOf(timePlayerOne.getText().toString()));
+        }
+        if (!TextUtils.isEmpty(timePlayerTwo.getText())) {
+            timer.setSecondPlayerTime(Integer.valueOf(timePlayerTwo.getText().toString()));
+        }
+        if (!TextUtils.isEmpty(addon.getText())) {
+            timer.setAddon(Integer.valueOf(addon.getText().toString()));
         }
     }
 
