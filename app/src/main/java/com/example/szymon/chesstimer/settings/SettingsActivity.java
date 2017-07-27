@@ -24,7 +24,6 @@ import butterknife.OnClick;
 import butterknife.OnItemSelected;
 
 import static android.widget.Toast.LENGTH_SHORT;
-import static com.example.szymon.chesstimer.main.MainActivity.DELAY;
 import static com.example.szymon.chesstimer.main.MainActivity.TIMER_KEY;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsView {
@@ -41,8 +40,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
 
     private TimerValues timer;
 
-    @Delay
-    private int position;
     private SettingsPresenter settingsPresenter;
 
     public static Intent getIntent(final Context context) {
@@ -79,7 +76,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
                     Integer.valueOf(timePlayerOne.getText().toString()),
                     Integer.valueOf(timePlayerTwo.getText().toString()),
                     Integer.valueOf(addon.getText().toString()));
-
         }
     }
 
@@ -96,7 +92,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
         setTimer();
         Intent intent = new Intent();
         intent.putExtra(TIMER_KEY, timer);
-        intent.putExtra(DELAY, position);
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -104,24 +99,26 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
 
     @OnItemSelected(R.id.delay_spinner)
     public void spinnerItemSelected(Spinner spinner, int position) {
-        this.position = getDelayPosition(position);
-        toast(Integer.toString(this.position));
+        timer.setDelay(getDelayPosition(position));
+        //toast(Integer.toString(this.position));
     }
 
     private int getDelayPosition(int position) {
         switch (position) {
             case 0:
-                return Delay.SIMPLE_DELAY
+                return Delay.SIMPLE_DELAY;
             case 1:
                 return Delay.BRONSTEIN_DELAY;
             case 2:
-                return Delay.FISCHER_DELAY
+                return Delay.FISCHER_DELAY;
+            default:
+                return Delay.FISCHER_DELAY;
         }
     }
 
     @IntDef({Delay.SIMPLE_DELAY, Delay.BRONSTEIN_DELAY, Delay.FISCHER_DELAY})
     @Retention(RetentionPolicy.SOURCE)
-    @interface Delay {
+    public @interface Delay {
         int SIMPLE_DELAY = 0;
         int BRONSTEIN_DELAY = 1;
         int FISCHER_DELAY = 2;

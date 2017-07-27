@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
             final Bundle bundle = data.getExtras();
             if (bundle != null) {
                 TimerValues timerValues = bundle.getParcelable(TIMER_KEY);
+                toast(timerValues.toString());
                 updateValuesOnButtons(timerValues);
                 mainPresenter.setTimer(timerValues);
             }
