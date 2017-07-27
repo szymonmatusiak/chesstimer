@@ -8,7 +8,7 @@ import android.os.Parcelable;
  */
 
 public class TimerValues implements Parcelable {
-    public static final Parcelable.Creator<TimerValues> CREATOR = new Parcelable.Creator<TimerValues>() {
+    public static final Creator<TimerValues> CREATOR = new Creator<TimerValues>() {
         @Override
         public TimerValues createFromParcel(Parcel source) {
             return new TimerValues(source);
@@ -19,40 +19,26 @@ public class TimerValues implements Parcelable {
             return new TimerValues[size];
         }
     };
-    private int firstPlayerTime, secondPlayerTime, addon;
-
-    public TimerValues(int firstPlayerTime, int secondPlayerTime, int addon) {
-        this.firstPlayerTime = firstPlayerTime;
-        this.secondPlayerTime = secondPlayerTime;
-
-        this.addon = addon;
-    }
+    private int firstPlayerTime, secondPlayerTime, addon, delay;
 
     public TimerValues() {
-        firstPlayerTime = 10;
-        secondPlayerTime = 10;
-        addon = 5;
     }
 
     protected TimerValues(Parcel in) {
         this.firstPlayerTime = in.readInt();
         this.secondPlayerTime = in.readInt();
         this.addon = in.readInt();
+        this.delay = in.readInt();
     }
-
+    
     @Override
     public String toString() {
         return "TimerValues{" +
                 "firstPlayerTime=" + firstPlayerTime +
                 ", secondPlayerTime=" + secondPlayerTime +
                 ", addon=" + addon +
+                ", delay=" + delay +
                 '}';
-    }
-
-    public void setTimes(int time1, int time2, int time3) {
-        this.firstPlayerTime = time1;
-        this.secondPlayerTime = time2;
-        this.addon = time3;
     }
 
     public int getFirstPlayerTime() {
@@ -79,6 +65,14 @@ public class TimerValues implements Parcelable {
         this.addon = addon;
     }
 
+    public int getDelay() {
+        return delay;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -89,6 +83,6 @@ public class TimerValues implements Parcelable {
         dest.writeInt(this.firstPlayerTime);
         dest.writeInt(this.secondPlayerTime);
         dest.writeInt(this.addon);
+        dest.writeInt(this.delay);
     }
-
 }
