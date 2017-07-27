@@ -45,6 +45,8 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
+        if(handler != null)
+            handler.removeCallbacks(runnable);
         detachView(false);
     }
 
@@ -84,7 +86,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         }
     }
 
-    private void timerWithFischerDelay(int button) {
+    private void timerWithFischerDelay(final int button) {
         if (button == TOP) {
             if (moves >= 3) {
                 timerValues.setFirstPlayerTime(timerValues.getFirstPlayerTime() + timerValues.getAddon());
@@ -100,7 +102,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         }
     }
 
-    private void startTimer(int time, @Button final int button) {
+    private void startTimer(final int time, @Button final int button) {
 
         countDownTimer = new CountDownTimer(time, 1000) {
 
@@ -125,7 +127,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
     }
 
     @NonNull
-    private String getTimeToShow(long millisUntilFinished) {
+    private String getTimeToShow(final long millisUntilFinished) {
         String minutes = "" + (millisUntilFinished / (1000 * 60));
         if (minutes.length() == 1) minutes = "0" + minutes;
         String seconds = "" + (millisUntilFinished / 1000) % 60;
@@ -141,11 +143,11 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 
     }
 
-    private void convertAddonToSeconds(TimerValues timerValues) {
+    private void convertAddonToSeconds(final TimerValues timerValues) {
         timerValues.setAddon(timerValues.getAddon() * 1000);
     }
 
-    private void convertTimeToMinutes(TimerValues timerValues) {
+    private void convertTimeToMinutes(final TimerValues timerValues) {
         timerValues.setFirstPlayerTime(timerValues.getFirstPlayerTime() * 1000 * 60);
         timerValues.setSecondPlayerTime(timerValues.getSecondPlayerTime() * 1000 * 60);
     }

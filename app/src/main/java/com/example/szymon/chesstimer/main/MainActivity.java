@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         }
     }
 
-    public void updateValuesOnButton(String text, int buttonID) {
+    public void updateValuesOnButton(final String text, final int buttonID) {
         if (buttonID == Button.TOP)
             playerTop.setText(text);
         else
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @OnClick({R.id.top_button, R.id.bottom_button})
-    public void onTimerButtonClicked(View view) {
+    public void onTimerButtonClicked(final View view) {
         switch (view.getId()) {
             case R.id.bottom_button:
                 mainPresenter.onTimerButtonClicked(Button.BOTTOM);
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         }
     }
 
-    private void switchActiveButton(int button) {
+    private void switchActiveButton(final int button) {
         if (button == Button.BOTTOM) {
             playerBottom.setClickable(false);
             playerTop.setClickable(true);
