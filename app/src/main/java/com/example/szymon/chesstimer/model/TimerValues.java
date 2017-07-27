@@ -3,6 +3,8 @@ package com.example.szymon.chesstimer.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.szymon.chesstimer.settings.SettingsActivity;
+
 /**
  * Created by Szymon on 05.07.2017.
  */
@@ -19,18 +21,26 @@ public class TimerValues implements Parcelable {
             return new TimerValues[size];
         }
     };
-    private int firstPlayerTime, secondPlayerTime, addon, delay;
+    private int firstPlayerTime, secondPlayerTime, addon;
+    @SettingsActivity.Delay
+    private int delay;
 
     public TimerValues() {
     }
-
+    @SuppressWarnings("ResourceType")
     protected TimerValues(Parcel in) {
         this.firstPlayerTime = in.readInt();
         this.secondPlayerTime = in.readInt();
         this.addon = in.readInt();
         this.delay = in.readInt();
     }
-    
+
+    public void setTimes(int firstPlayerTime, int secondPlayerTime, int addon) {
+        this.firstPlayerTime = firstPlayerTime;
+        this.secondPlayerTime = secondPlayerTime;
+        this.addon = addon;
+    }
+
     @Override
     public String toString() {
         return "TimerValues{" +
