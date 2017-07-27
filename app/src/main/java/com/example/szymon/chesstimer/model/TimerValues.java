@@ -26,7 +26,11 @@ public class TimerValues implements Parcelable {
     private int delay;
 
     public TimerValues() {
+        firstPlayerTime = 10;
+        secondPlayerTime = 10;
+        addon = 5;
     }
+
     @SuppressWarnings("ResourceType")
     protected TimerValues(Parcel in) {
         this.firstPlayerTime = in.readInt();
