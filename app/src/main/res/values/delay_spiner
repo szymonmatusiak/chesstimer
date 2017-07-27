@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="delay_array">
+        <item>@string/simple_delay</item>
+        <item>@string/fischer_delay</item>
+        <item>@string/bronstein_delay</item>
+    </string-array>
+</resources>

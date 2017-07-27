@@ -2,37 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:gravity="center_vertical|center_horizontal"
     android:orientation="vertical"
-    android:gravity="center_vertical|center_horizontal">
+    android:padding="16dp"
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:foregroundGravity="center"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="10dp"
-        android:foregroundGravity="center">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/player_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/time_player_one"/>
+            android:text="@string/time_player_one" />
 
         <EditText
             android:id="@+id/time_player_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
-            android:inputType="numberSigned"
-            android:hint="10"/>
+            android:hint="10"
+            android:inputType="numberSigned" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="min" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,20 +48,22 @@
             android:id="@+id/player_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/time_player_two"/>
+            android:text="@string/time_player_two" />
 
         <EditText
             android:id="@+id/time_player_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
-            android:inputType="numberSigned"
-            android:hint="10"/>
+            android:hint="10"
+            android:inputType="numberSigned" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="min" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,13 +83,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="2"
-            android:inputType="numberSigned"
-            android:hint="5"/>
+            android:hint="5"
+            android:inputType="numberSigned" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="s" />
+
     </LinearLayout>
+
+    <Spinner
+        android:id="@+id/delay_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05" />
 
     <Button
         android:id="@+id/start"
