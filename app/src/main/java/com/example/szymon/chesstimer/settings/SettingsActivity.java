@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.szymon.chesstimer.R;
@@ -15,6 +17,7 @@ import com.example.szymon.chesstimer.model.TimerValues;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static com.example.szymon.chesstimer.main.MainActivity.TIMER_KEY;
@@ -28,6 +31,8 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
     EditText addon;
     @BindView(R.id.start)
     Button button;
+    @BindView(R.id.delay_spinner)
+    Spinner spinner;
 
     private TimerValues timer;
     private SettingsPresenter settingsPresenter;
@@ -43,6 +48,9 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
         ButterKnife.bind(this);
         timer = new TimerValues();
         settingsPresenter = new SettingsPresenterImpl();
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.delay_array,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 
     @Override
@@ -81,5 +89,11 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
         intent.putExtra(TIMER_KEY, timer);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+
+    @OnItemSelected(R.id.delay_spinner)
+    public void spinnerItemSelected(Spinner spinner, int position) {
+        toast(Integer.toString(position));
     }
 }

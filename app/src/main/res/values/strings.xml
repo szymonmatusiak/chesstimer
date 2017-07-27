@@ -4,5 +4,8 @@
     <string name="time_player_one">Time for player number one</string>
     <string name="time_player_two">Time for player number two</string>
     <string name="addon">Time added after move</string>
+    <string name="simple_delay">Simple delay</string>
+    <string name="bronstein_delay">Bronstein delay</string>
+    <string name="fischer_delay">Fischer delay</string>
 
 </resources>
