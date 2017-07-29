@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         }
     }
 
-    private void setButtonsToActive() {
+    public void setButtonsToActive() {
         playerBottom.setClickable(true);
         playerTop.setClickable(true);
     }
@@ -125,6 +125,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
         }
     }
 
+    @OnClick(R.id.pause)
+    public void pauseButtonClicked(){
+        mainPresenter.stopRunningTimer();
+    }
     private void switchActiveButton(final int button) {
         if (button == Button.BOTTOM) {
             playerBottom.setClickable(false);

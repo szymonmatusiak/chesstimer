@@ -21,4 +21,6 @@ public interface MainView extends IBaseView {
     void updateValuesOnButton(String text, int button);
 
     void toast(String text);
+
+    void setButtonsToActive();
 }

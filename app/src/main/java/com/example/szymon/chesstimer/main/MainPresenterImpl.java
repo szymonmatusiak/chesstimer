@@ -44,11 +44,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 
     @Override
     public void onStop() {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
-        if (handler != null)
-            handler.removeCallbacks(runnable);
+        stopRunningTimer();
         detachView(false);
     }
 
@@ -162,7 +158,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         if (minutes.length() == 1) minutes = "0" + minutes;
         String seconds = "" + (millisUntilFinished / 1000) % 60;
         if (seconds.length() == 1) seconds = "0" + seconds;
-        return String.format( "%s %s %s"  , minutes, ":", seconds);
+        return String.format("%s %s %s", minutes, ":", seconds);
     }
 
     @Override
@@ -173,6 +169,16 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         lastMoveFirstPlayer = timerValues.getFirstPlayerTime();
         lastMoveSecondPlayer = timerValues.getSecondPlayerTime();
         moves = 0;
+    }
+
+    @Override
+    public void stopRunningTimer() {
+        getView().setButtonsToActive();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+        if (handler != null)
+            handler.removeCallbacks(runnable);
     }
 
     private void convertAddonToSeconds(final TimerValues timerValues) {

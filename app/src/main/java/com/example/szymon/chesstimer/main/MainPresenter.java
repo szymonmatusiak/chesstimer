@@ -1,7 +1,5 @@
 package com.example.szymon.chesstimer.main;
 
-import android.os.Parcelable;
-
 import com.example.szymon.chesstimer.model.TimerValues;
 
 /**
@@ -19,4 +17,6 @@ public interface MainPresenter {
     void onTimerButtonClicked(int button);
 
     void setTimer(TimerValues timerValues);
+
+    void stopRunningTimer();
 }
