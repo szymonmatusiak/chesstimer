@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mainPresenter = new MainPresenterImpl();
+        mainPresenter.setTimer(new TimerValues());
+
     }
 
     @Override
@@ -78,7 +80,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 updateValuesOnButtons(timerValues);
                 mainPresenter.setTimer(timerValues);
             }
+            setButtonsToActive();
         }
+    }
+
+    private void setButtonsToActive() {
+        playerBottom.setClickable(true);
+        playerTop.setClickable(true);
     }
 
     public void updateValuesOnButton(final String text, final int buttonID) {
