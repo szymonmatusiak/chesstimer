@@ -103,7 +103,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingsView 
     @OnItemSelected(R.id.delay_spinner)
     public void spinnerItemSelected(final Spinner spinner, final int position) {
         timer.setDelay(getDelayPosition(position));
-        //toast(Integer.toString(this.position));
     }
 
     private int getDelayPosition(final int position) {

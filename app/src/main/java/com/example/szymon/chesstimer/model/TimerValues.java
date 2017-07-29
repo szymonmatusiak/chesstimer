@@ -21,14 +21,17 @@ public class TimerValues implements Parcelable {
             return new TimerValues[size];
         }
     };
+    private static final int DEFAULT_STARTING_TIME_10_MINUTES = 10;
+    private static final int DEFAULT_ADDON_5SEKONDS = 5;
     private int firstPlayerTime, secondPlayerTime, addon;
     @SettingsActivity.Delay
     private int delay;
 
     public TimerValues() {
-        firstPlayerTime = 10;
-        secondPlayerTime = 10;
-        addon = 5;
+        firstPlayerTime = DEFAULT_STARTING_TIME_10_MINUTES;
+        secondPlayerTime = DEFAULT_STARTING_TIME_10_MINUTES;
+        addon = DEFAULT_ADDON_5SEKONDS;
+        delay = SettingsActivity.Delay.FISCHER_DELAY;
     }
 
     @SuppressWarnings("ResourceType")
@@ -39,7 +42,7 @@ public class TimerValues implements Parcelable {
         this.delay = in.readInt();
     }
 
-    public void setTimes(int firstPlayerTime, int secondPlayerTime, int addon) {
+    public void setTimes(final int firstPlayerTime, final int secondPlayerTime, final int addon) {
         this.firstPlayerTime = firstPlayerTime;
         this.secondPlayerTime = secondPlayerTime;
         this.addon = addon;
@@ -59,7 +62,7 @@ public class TimerValues implements Parcelable {
         return firstPlayerTime;
     }
 
-    public void setFirstPlayerTime(int firstPlayerTime) {
+    public void setFirstPlayerTime(final int firstPlayerTime) {
         this.firstPlayerTime = firstPlayerTime;
     }
 
@@ -67,7 +70,7 @@ public class TimerValues implements Parcelable {
         return secondPlayerTime;
     }
 
-    public void setSecondPlayerTime(int secondPlayerTime) {
+    public void setSecondPlayerTime(final int secondPlayerTime) {
         this.secondPlayerTime = secondPlayerTime;
     }
 
@@ -75,7 +78,7 @@ public class TimerValues implements Parcelable {
         return addon;
     }
 
-    public void setAddon(int addon) {
+    public void setAddon(final int addon) {
         this.addon = addon;
     }
 
@@ -83,7 +86,7 @@ public class TimerValues implements Parcelable {
         return delay;
     }
 
-    public void setDelay(int delay) {
+    public void setDelay(final int delay) {
         this.delay = delay;
     }
 

@@ -21,6 +21,8 @@ import static com.example.szymon.chesstimer.main.MainPresenterImpl.Button.TOP;
 
 public class MainPresenterImpl extends BasePresenter<MainView> implements MainPresenter {
 
+    private static final int ONE_SECOND = 1000;
+    private static final int NUMBER_OF_MOVES_BEFORE_ADDING_TIME = 3;
     private TimerValues timerValues;
     private CountDownTimer countDownTimer;
     private Handler handler;
@@ -59,12 +61,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         }
         switch (timerValues.getDelay()) {
             case SettingsActivity.Delay.SIMPLE_DELAY:
-                handler.postDelayed(runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        timerWithSimpleDelay(button);
-                    }
-                }, timerValues.getAddon());
+                fiveSecondsDelayBeforeBronstein(button);
                 break;
 
             case SettingsActivity.Delay.FISCHER_DELAY:
@@ -77,28 +74,33 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         }
     }
 
+    private void fiveSecondsDelayBeforeBronstein(final int button) {
+        handler.postDelayed(runnable = new Runnable() {
+            @Override
+            public void run() {
+                timerWithSimpleDelay(button);
+            }
+        }, timerValues.getAddon());
+    }
+
     private void timerWithBronsteinDelay(int button) {
         if (button == TOP) {
-            if (moves >= 3) {
-                if (lastMoveFirstPlayer - timerValues.getFirstPlayerTime() > timerValues.getAddon()) {
-                    timerValues.setFirstPlayerTime(timerValues.getFirstPlayerTime() + timerValues.getAddon());
-                    getView().updateValuesOnButton(getTimeToShow(timerValues.getFirstPlayerTime()), button);
-                } else {
-                    timerValues.setFirstPlayerTime(lastMoveFirstPlayer);
-                }
+            if (lastMoveFirstPlayer - timerValues.getFirstPlayerTime() > timerValues.getAddon()) {
+                timerValues.setFirstPlayerTime(timerValues.getFirstPlayerTime() + timerValues.getAddon());
+                getView().updateValuesOnButton(getTimeToShow(timerValues.getFirstPlayerTime()), button);
+            } else {
+                timerValues.setFirstPlayerTime(lastMoveFirstPlayer);
             }
             lastMoveFirstPlayer = timerValues.getFirstPlayerTime();
             startTimer(timerValues.getFirstPlayerTime(), TOP);
         } else {
-            if (moves >= 3) {
-                if (lastMoveSecondPlayer - timerValues.getSecondPlayerTime() > timerValues.getAddon()) {
-                    timerValues.setSecondPlayerTime(timerValues.getSecondPlayerTime() + timerValues.getAddon());
-                    getView().updateValuesOnButton(getTimeToShow(timerValues.getSecondPlayerTime()), button);
-                } else {
-                    timerValues.setSecondPlayerTime(lastMoveSecondPlayer);
-
-                }
+            if (lastMoveSecondPlayer - timerValues.getSecondPlayerTime() > timerValues.getAddon()) {
+                timerValues.setSecondPlayerTime(timerValues.getSecondPlayerTime() + timerValues.getAddon());
+                getView().updateValuesOnButton(getTimeToShow(timerValues.getSecondPlayerTime()), button);
+            } else {
+                timerValues.setSecondPlayerTime(lastMoveSecondPlayer);
             }
+
             lastMoveSecondPlayer = timerValues.getSecondPlayerTime();
             startTimer(timerValues.getSecondPlayerTime(), BOTTOM);
         }
@@ -116,13 +118,13 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 
     private void timerWithFischerDelay(final int button) {
         if (button == TOP) {
-            if (moves >= 3) {
+            if (moves >= NUMBER_OF_MOVES_BEFORE_ADDING_TIME) {
                 timerValues.setFirstPlayerTime(timerValues.getFirstPlayerTime() + timerValues.getAddon());
                 getView().updateValuesOnButton(getTimeToShow(timerValues.getFirstPlayerTime()), button);
             }
             startTimer(timerValues.getFirstPlayerTime(), TOP);
         } else {
-            if (moves >= 3) {
+            if (moves >= NUMBER_OF_MOVES_BEFORE_ADDING_TIME) {
                 timerValues.setSecondPlayerTime(timerValues.getSecondPlayerTime() + timerValues.getAddon());
                 getView().updateValuesOnButton(getTimeToShow(timerValues.getSecondPlayerTime()), button);
             }
@@ -132,7 +134,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 
     private void startTimer(final int time, @Button final int button) {
 
-        countDownTimer = new CountDownTimer(time, 1000) {
+        countDownTimer = new CountDownTimer(time, ONE_SECOND) {
 
             public void onTick(long millisUntilFinished) {
                 if (button == TOP) {
@@ -160,7 +162,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         if (minutes.length() == 1) minutes = "0" + minutes;
         String seconds = "" + (millisUntilFinished / 1000) % 60;
         if (seconds.length() == 1) seconds = "0" + seconds;
-        return minutes + ":" + seconds;
+        return String.format( "%s %s %s"  , minutes, ":", seconds);
     }
 
     @Override
@@ -170,6 +172,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         convertAddonToSeconds(timerValues);
         lastMoveFirstPlayer = timerValues.getFirstPlayerTime();
         lastMoveSecondPlayer = timerValues.getSecondPlayerTime();
+        moves = 0;
     }
 
     private void convertAddonToSeconds(final TimerValues timerValues) {
