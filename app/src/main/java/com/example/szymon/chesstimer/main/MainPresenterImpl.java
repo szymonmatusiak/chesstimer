@@ -158,7 +158,9 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         if (minutes.length() == 1) minutes = "0" + minutes;
         String seconds = "" + (millisUntilFinished / 1000) % 60;
         if (seconds.length() == 1) seconds = "0" + seconds;
+
         return String.format("%s %s %s", minutes, ":", seconds);
+
     }
 
     @Override
@@ -180,6 +182,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         if (handler != null)
             handler.removeCallbacks(runnable);
     }
+
 
     private void convertAddonToSeconds(final TimerValues timerValues) {
         timerValues.setAddon(timerValues.getAddon() * 1000);

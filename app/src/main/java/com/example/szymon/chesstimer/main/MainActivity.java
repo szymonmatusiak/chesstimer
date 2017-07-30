@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void pauseButtonClicked(){
         mainPresenter.stopRunningTimer();
     }
+
     private void switchActiveButton(final int button) {
         if (button == Button.BOTTOM) {
             playerBottom.setClickable(false);
