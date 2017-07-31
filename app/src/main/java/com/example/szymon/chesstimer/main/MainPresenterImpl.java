@@ -159,6 +159,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
         String seconds = "" + (millisUntilFinished / 1000) % 60;
         if (seconds.length() == 1) seconds = "0" + seconds;
         return String.format("%s %s %s", minutes, ":", seconds);
+
     }
 
     @Override

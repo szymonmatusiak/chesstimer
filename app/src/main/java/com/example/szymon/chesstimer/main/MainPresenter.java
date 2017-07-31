@@ -1,5 +1,6 @@
 package com.example.szymon.chesstimer.main;
 
+
 import com.example.szymon.chesstimer.model.TimerValues;
 
 /**
@@ -19,4 +20,5 @@ public interface MainPresenter {
     void setTimer(TimerValues timerValues);
 
     void stopRunningTimer();
+
 }

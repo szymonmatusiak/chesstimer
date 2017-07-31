@@ -23,4 +23,5 @@ public interface MainView extends IBaseView {
     void toast(String text);
 
     void setButtonsToActive();
+
 }
