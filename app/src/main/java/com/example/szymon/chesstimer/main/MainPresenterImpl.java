@@ -173,7 +173,6 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 
     @Override
     public void stopRunningTimer() {
-        getView().setButtonsToActive();
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
