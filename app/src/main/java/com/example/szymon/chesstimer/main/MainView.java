@@ -8,12 +8,6 @@ import com.example.szymon.chesstimer.model.TimerValues;
  */
 
 public interface MainView extends IBaseView {
-    void setTimeToFirst();
-
-    void setTimeToSecond();
-
-    void reset();
-
     void openSettings();
 
     void updateValuesOnButtons(TimerValues timerValues);

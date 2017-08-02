@@ -125,10 +125,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
         }
     }
 
-    @OnClick(R.id.pause)
-    public void pauseButtonClicked(){
-        mainPresenter.stopRunningTimer();
-    }
     private void switchActiveButton(final int button) {
         if (button == Button.BOTTOM) {
             playerBottom.setClickable(false);
@@ -153,17 +149,4 @@ public class MainActivity extends AppCompatActivity implements MainView {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
-
-    @Override
-    public void setTimeToFirst() {
-    }
-
-    @Override
-    public void setTimeToSecond() {
-    }
-
-    @Override
-    public void reset() {
-    }
-
 }
