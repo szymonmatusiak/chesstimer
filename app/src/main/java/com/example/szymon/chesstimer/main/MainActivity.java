@@ -140,6 +140,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
         startActivityForResult(SettingsActivity.getIntent(getBaseContext()), SETTINGS_REQUEST_CODE);
     }
 
+    @OnClick(R.id.pause)
+    public void pauseButtonClicked() {
+        mainPresenter.stopRunningTimer();
+    }
+
     private void setLayoutToFullscreen() {
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -149,4 +154,5 @@ public class MainActivity extends AppCompatActivity implements MainView {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
+
 }
